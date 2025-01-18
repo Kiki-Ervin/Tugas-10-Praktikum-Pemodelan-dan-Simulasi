@@ -1,0 +1,17 @@
+{% if error %}
+    <p class="error">{{ error }}</p>
+{% endif %}
+
+{% if steps %}
+    <h3>Langkah-langkah Perhitungan:</h3>
+    <ul>
+        {% for step in steps %}
+            <li>{{ step }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if result %}
+    <h3>Hasil:</h3>
+    <p>{{ result }}</p>
+{% endif %}

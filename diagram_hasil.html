@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagram Hasil</title>
+</head>
+<body>
+    <h1>Diagram Hasil Probabilitas Binomial</h1>
+    {% if diagram_data %}
+        <img src="data:image/png;base64,{{ diagram_data }}" alt="Diagram Probabilitas">
+    {% else %}
+        <p>Diagram tidak tersedia.</p>
+    {% endif %}
+</body>
+</html>

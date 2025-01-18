@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Distribusi Probabilitas Binomial</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4682b4;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background-color: #4682b4;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #5a9bd5;
+        }
+
+        .reset-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .reset-btn:hover {
+            background-color: #e53935;
+        }
+
+        .result-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .steps ul {
+            padding-left: 1.5rem;
+        }
+
+        .steps ul li,
+        .result p {
+            margin: 0.5rem 0;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>Kalkulator Distribusi Probabilitas Binomial</header>
+    <div class="container">
+        <h2>Hitung Probabilitas Binomial</h2>
+        <form method="POST" action="{{ url_for('hitung_probabilitas') }}">
+            <div class="form-group">
+                <label for="n">Jumlah driver yang aktif (n):</label>
+                <input type="number" id="n" name="n" value="{{ n }}" required>
+            </div>
+            <div class="form-group">
+                <label for="p">kemungkinan seorang driver mendapatkan order (p):</label>
+                <input type="number" id="p" name="p" step="0.01" value="{{ p }}" required>
+            </div>
+            <div class="form-group">
+                <label for="k">Jumlah Keberhasilan (k):</label>
+                <input type="number" id="k" name="k" value="{{ k }}" required>
+            </div>
+            <button class="btn" type="submit">Hitung Probabilitas</button>
+        </form>
+
+        <!-- Menambahkan tombol Reset -->
+        <form method="POST" action="{{ url_for('reset') }}">
+            <button type="submit" class="reset-btn">Reset</button>
+        </form>
+
+        <!-- Menampilkan langkah-langkah perhitungan dan hasil -->
+        <div class="result-container" id="result-container">
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            
+            {% if steps %}
+                <h3>Langkah-langkah Perhitungan:</h3>
+                <div class="steps">
+                    <ul>
+                        {% for step in steps %}
+                            <li>{{ step }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            
+            {% if result %}
+                <h3>Hasil:</h3>
+                <p>{{ result }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Tombol Kembali -->
+        {% if result or steps %}
+            <form method="GET" action="{{ url_for('prob_binomial') }}">
+                <button type="submit" class="btn">Kembali</button>
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>
